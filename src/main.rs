@@ -1,12 +1,14 @@
-fn main() {
-    let input = include_str!("input.txt");
+fn single_run(input:&str)->(String,usize){
+    let lines: Vec<&str> = input.lines().collect();
+    let mut new_input = String::new();
 
-    let lines: Vec<_> = input.lines().collect();
+
     let mut count = 0;
     for (y,l) in lines.iter().enumerate(){
+
         for (x,c) in l.as_bytes().iter().enumerate(){
             if *c!=b'@'{
-                print!(".");
+                new_input.push_str(".");
                 continue;
             }
 
@@ -29,14 +31,41 @@ fn main() {
 
 
             if adjecent-1<4 {
-                print!("x");
+                new_input.push_str("x");
                 count+=1;
             }else{
-                print!("@")
+                new_input.push_str("@")
             }
         }
-        println!("")
-    }
 
-    println!("found {count}");
+        new_input.push_str("\n");
+    }
+    (new_input,count)
+
+}
+
+//part 1
+// fn main() {
+//     let input = include_str!("input.txt");
+
+//     let (_,count) = single_run(input);
+    
+//     println!("found {count}");
+// }
+
+//part 2
+fn main() {
+    let mut input = include_str!("input.txt").to_string();
+    let mut full_count = 0;
+    loop {
+        let (new_input,count) = single_run(&input);
+        input = new_input;
+        full_count+=count;
+
+        if count==0{
+            break;
+        }
+    }
+    
+    println!("found {full_count}");
 }
