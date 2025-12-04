@@ -58,6 +58,7 @@ fn main() {
     let mut input = include_str!("input.txt").to_string();
     let mut full_count = 0;
     loop {
+        println!("current state:\n{input}");
         let (new_input,count) = single_run(&input);
         input = new_input;
         full_count+=count;
